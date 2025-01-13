@@ -48,9 +48,9 @@ function OutWork() {
 
     const requestOutWork = async () => {
         try {
-            if(!confirm('외근을 신청 하시겠습니까?')) return false;
+            if (!confirm('외근을 신청 하시겠습니까?')) return false;
             const response = await axios.post('http://localhost:3000/outwork/request', formData);
-            if(response.data.code != 200){
+            if (response.data.code !== 200) {
                 alert(response.data.message);
                 return false;
             }
@@ -64,38 +64,49 @@ function OutWork() {
                 location: ''
             });
         } catch (error) {
-            alert('외근 신청이 실패 하였습니다 ',error);
+            alert('외근 신청이 실패 하였습니다 ', error);
             console.log('외근 신청 실패', error);
         }
     }
 
-
     return (
-        <div>
-            <UserSelect
-                label="기안자"
-                users={requestUser}
-                onChange={userSelectHandler('requestUserId')}
-                value={formData.requestUserId}
-            />
-            <UserSelect
-                label="승인자"
-                users={approverUser}
-                onChange={userSelectHandler('approverUserId')}
-                value={formData.approverUserId}
-            />
-            <input
-                type="text"
-                onChange={locationHandler}
-                placeholder="장소"
-                value={formData.location}
-            />
-            <button onClick={requestOutWork}>외근요청</button>
-            <RequestList
-                users={requestList}
-            />
+        <div className="outwork-container">
+            <div className="outwork-card">
+                <h3 className="outwork-title">어다인 외근 신청</h3>
+                <div className="form-row">
+                    <UserSelect
+                        label="기안자"
+                        users={requestUser}
+                        onChange={userSelectHandler('requestUserId')}
+                        value={formData.requestUserId}
+                    />
+                </div>
+                <div className="form-row">
+                    <UserSelect
+                        label="승인자"
+                        users={approverUser}
+                        onChange={userSelectHandler('approverUserId')}
+                        value={formData.approverUserId}
+                    />
+                </div>
+                <div className="location-input-group">
+                    <input
+                        className="form-control"
+                        type="text"
+                        onChange={locationHandler}
+                        placeholder="장소"
+                        value={formData.location}
+                    />
+                    <button className="btn btn-primary" onClick={requestOutWork}>
+                        신청
+                    </button>
+                </div>
+                <div className="table-container">
+                    <RequestList users={requestList}/>
+                </div>
+            </div>
         </div>
-    )
+    );
 }
 
 export default OutWork
