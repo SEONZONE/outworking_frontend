@@ -2,11 +2,13 @@ import {useState, useEffect} from 'react';
 import UserSelect from "./UserSelect";
 import UpdateStatus from "./UpdateStatus.jsx";
 import axios from 'axios';
+import UserSelectCondition from "./UserSelectCondition.jsx";
 
 function OutWork() {
     const [requestUser, setRequestUser] = useState([]);
     const [approverUser, setApproverUser] = useState([]);
     const [requestList, setRequestList] = useState([]);
+    const [statusList, setStatusList] = useState([]);
     const [formData, setFormData] = useState({
         requestUserId: '',
         approverUserId: '',
@@ -16,14 +18,16 @@ function OutWork() {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const [reqUserResponse, approverUserRequest, requestUserList] = await Promise.all([
+                const [reqUserResponse, approverUserRequest, requestUserList,statusList] = await Promise.all([
                     axios.post('http://localhost:3000/outwork/list/reqUser'),
                     axios.post('http://localhost:3000/outwork/list/approverUser'),
                     axios.post('http://localhost:3000/outwork/list/requestList'),
+                    axios.post('http://localhost:3000/outwork/list/statusList'),
                 ]);
                 setRequestUser(reqUserResponse.data);
                 setApproverUser(approverUserRequest.data);
                 setRequestList(requestUserList.data);
+                setStatusList(statusList.data);
             } catch (error) {
                 console.log("직원 목록을 불러오는중 에러 발생!: ", error)
             }
@@ -69,15 +73,14 @@ function OutWork() {
     }
 
     //승인 목록 리프레시
-    const refreshList = async () => {
-        try{
-            const requestListReload = await axios.post('http://localhost:3000/outwork/list/requestList');
+    const refreshList = async (data) => {
+        try {
+            const requestListReload = await axios.post('http://localhost:3000/outwork/list/requestList',data);
             setRequestList(requestListReload.data);
-        }catch (error) {
+        } catch (error) {
             console.log("승인요청 목록을 불러오는중 에러 발생!: ", error)
         }
     }
-
 
 
     return (
@@ -86,7 +89,7 @@ function OutWork() {
                 <h3 className="outwork-title">어다인 외근 신청</h3>
                 <div className="form-row">
                     <UserSelect
-                        label="기안자"
+                        label="요청자"
                         users={requestUser}
                         onChange={userSelectHandler('requestUserId')}
                         value={formData.requestUserId}
@@ -111,6 +114,14 @@ function OutWork() {
                     <button className="btn btn-primary" onClick={requestOutWork}>
                         신청
                     </button>
+                </div>
+                <div className="location-input-group">
+                    <UserSelectCondition
+                        requestUsers={requestUser}
+                        approverUsers={approverUser}
+                        statusList={statusList}
+                        onSearchConditionChange={refreshList}
+                    />
                 </div>
                 <div className="table-container">
                     <UpdateStatus

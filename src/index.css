@@ -48,3 +48,45 @@
     background-color: #fff;
     z-index: 1;
 }
+
+.search-condition-fieldset {
+    border: 1px solid #dee2e6;
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.search-condition-legend {
+    float: none;
+    width: auto;
+    padding: 0 10px;
+    margin-bottom: 0;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.select-condition-container {
+    display: flex;
+    gap: 10px;
+}
+
+.select-condition-item {
+    flex: 1;
+    min-width: 0;
+}
+
+.select-condition-half {
+    flex: 0.5;
+}
+
+.react-datepicker-wrapper {
+    flex: 1;
+}
+
+.react-datepicker-popper {
+    z-index: 9999 !important;
+}
+
+.react-datepicker__input-container input {
+    width: 100%;
+}

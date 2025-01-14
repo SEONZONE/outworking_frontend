@@ -9,7 +9,7 @@ const UserSelect = ({label, users, onChange,value}) => {
                 onChange={onChange}
                 value={value}
             >
-                <option selected value=''>직원을 선택하세요</option>
+                <option value="">직원을 선택하세요</option>
                 {users.map(user => (
                     <option value={user.아이디} key={user.아이디}>{user.이름}</option>
                 ))}

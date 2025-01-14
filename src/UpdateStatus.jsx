@@ -31,14 +31,14 @@ const UpdateStatus = ({users, refreshList}) => {
                 </thead>
                 <tbody>
                 {users.map(user => (
-                    <tr>
+                    <tr key={user.IDX}>
                         <td>{user.요청자이름}</td>
                         <td>{user.승인자이름}</td>
                         <td>{user.요청상태화면명}</td>
                         <td>{user.외근장소}</td>
                         <td>{user.요청날짜}</td>
                         <td>
-                            {user.요청상태 == 'I' && (
+                            {user.요청상태 == 'I' ? (
                                 <div className="btn-group" role="group">
                                     <button type="button" onClick={() => {
                                         updateStatusRouter({data: user, flag: 'C'})
@@ -49,6 +49,8 @@ const UpdateStatus = ({users, refreshList}) => {
                                     }} className="btn btn-danger btn-sm">반려
                                     </button>
                                 </div>
+                            ) : (
+                                <button type="button" className="btn btn-secondary" disabled> 결재완료 </button>
                             )}
                         </td>
                     </tr>
