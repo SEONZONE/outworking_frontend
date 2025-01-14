@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import UserSelect from "./UserSelect";
-import RequestList from "./RequestList.jsx";
+import UpdateStatus from "./UpdateStatus.jsx";
 import axios from 'axios';
 
 function OutWork() {
@@ -56,8 +56,7 @@ function OutWork() {
             }
             console.log('외근 신청 성공', response);
             alert('외근이 신청되었습니다.');
-            const requestListReload = await axios.post('http://localhost:3000/outwork/list/requestList');
-            setRequestList(requestListReload.data);
+            refreshList();
             setFormData({
                 requestUserId: '',
                 approverUserId: '',
@@ -68,6 +67,18 @@ function OutWork() {
             console.log('외근 신청 실패', error);
         }
     }
+
+    //승인 목록 리프레시
+    const refreshList = async () => {
+        try{
+            const requestListReload = await axios.post('http://localhost:3000/outwork/list/requestList');
+            setRequestList(requestListReload.data);
+        }catch (error) {
+            console.log("승인요청 목록을 불러오는중 에러 발생!: ", error)
+        }
+    }
+
+
 
     return (
         <div className="outwork-container">
@@ -102,7 +113,10 @@ function OutWork() {
                     </button>
                 </div>
                 <div className="table-container">
-                    <RequestList users={requestList}/>
+                    <UpdateStatus
+                        users={requestList}
+                        refreshList={refreshList}
+                    />
                 </div>
             </div>
         </div>

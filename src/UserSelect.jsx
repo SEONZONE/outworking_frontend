@@ -5,7 +5,7 @@ const UserSelect = ({label, users, onChange,value}) => {
         <div className="select-container">
             <label className="form-label">{label}: </label>
             <select
-                class="form-select"
+                className="form-select"
                 onChange={onChange}
                 value={value}
             >
