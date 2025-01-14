@@ -12,6 +12,8 @@
     - 승인자 선택
     - 외근 장소 입력
     - 신청 상태 확인
+    - 승인 처리
+    - 신청 상태 조건 조회
 
     
 #### OutWork Component
@@ -25,7 +27,7 @@
 - 주요 엔드포인트:
     - `/outwork/list/reqUser`: 기안자 목록 조회
     - `/outwork/list/approverUser`: 승인자 목록 조회
-    - `/outwork/request`: 외근 신청
+    - `/outwork/request`: 외근 신청 
 
 
 
@@ -44,5 +46,10 @@ npm run build
 npm run preview
 ```
 
-
-
+## TODO LIST
+-[x] 승인/반려 처리 기능 구현
+- [x] 목록 조건 조회/초기화 기능 구현
+- [ ] 엑셀 다운로드 기능 구현
+- [ ] CI/CD 로 배포 (gitaction)
+- [ ] 로그인 기능 구현
+- [ ] SSL 추가, 도메인 추가 
