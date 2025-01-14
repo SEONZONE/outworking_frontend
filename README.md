@@ -38,12 +38,6 @@ npm install
 
 # 개발 서버 실행 (Vite)
 npm run dev
-
-# 프로덕션 빌드
-npm run build
-
-# 프로덕션 빌드 미리보기
-npm run preview
 ```
 
 ## TODO LIST
