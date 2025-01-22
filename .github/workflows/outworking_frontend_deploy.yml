@@ -5,27 +5,47 @@ on:
   pull_request:
     branches: main
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+      - name: Install Dependencies
+        run: | 
+          npm ci
+      - name: Build
+        run: npm run build
+      - name: Upload build files
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-files
+          path: dist/
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build files
+        uses: actions/download-artifact@v2
+        with:
+          name: build-files
+          path: dist/
+
       - name: Deploy connect Server Frontend
         env:
           AWS_HOST: ${{secrets.AWS_HOST}}
           AWS_USER: ${{secrets.AWS_USER}}
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        #        Github Action Runner 설정
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H "$AWS_HOST" >> ~/.ssh/known_hosts
           ssh $AWS_USER@$AWS_HOST "
-            cd /home/$AWS_USER/outwork/frontend/outworking_frontend && \
-            git pull origin main && \
-            npm install && \
-            npm run build && \
-            cp -r dist/* /var/www/html/outwork/
+          scp -r dist/* $AWS_USER@$AWS_HOST:/var/www/html/outwork/
           "
           
           
