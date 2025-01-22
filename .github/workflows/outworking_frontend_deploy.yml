@@ -1,4 +1,4 @@
-name: outworking_backend_deploy
+name: outworking_frontend_deploy
 on:
   push:
     branches: main
