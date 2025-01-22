@@ -20,7 +20,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Upload build files
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: build-files
           path: dist/
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download build files
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-files
           path: dist/
