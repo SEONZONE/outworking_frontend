@@ -14,6 +14,9 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
+      - name: Env Setting
+        run: |
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" > .env.production
       - name: Install Dependencies
         run: | 
           npm ci
@@ -33,7 +36,6 @@ jobs:
         with:
           name: build-files
           path: dist/
-
       - name: Deploy connect Server Frontend
         env:
           AWS_HOST: ${{secrets.AWS_HOST}}
