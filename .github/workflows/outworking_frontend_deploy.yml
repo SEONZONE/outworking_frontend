@@ -44,9 +44,8 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H "$AWS_HOST" >> ~/.ssh/known_hosts
-          ssh $AWS_USER@$AWS_HOST "
           scp -r dist/* $AWS_USER@$AWS_HOST:/var/www/html/outwork/
-          "
+          
           
           
           
