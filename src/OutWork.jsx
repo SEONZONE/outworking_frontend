@@ -1,8 +1,9 @@
 import {useState, useEffect} from 'react';
 import UserSelect from "./UserSelect";
 import UpdateStatus from "./UpdateStatus.jsx";
-import axios from 'axios';
 import UserSelectCondition from "./UserSelectCondition.jsx";
+import api from "./api/axios.js";
+
 
 function OutWork() {
     const [requestUser, setRequestUser] = useState([]);
@@ -19,10 +20,10 @@ function OutWork() {
         const fetchUsers = async () => {
             try {
                 const [reqUserResponse, approverUserRequest, requestUserList,statusList] = await Promise.all([
-                    axios.post('http://localhost:3000/outwork/list/reqUser'),
-                    axios.post('http://localhost:3000/outwork/list/approverUser'),
-                    axios.post('http://localhost:3000/outwork/list/requestList'),
-                    axios.post('http://localhost:3000/outwork/list/statusList'),
+                    api.post('/outwork/list/reqUser'),
+                    api.post('/outwork/list/approverUser'),
+                    api.post('/outwork/list/requestList'),
+                    api.post('/outwork/list/statusList'),
                 ]);
                 setRequestUser(reqUserResponse.data);
                 setApproverUser(approverUserRequest.data);
@@ -53,7 +54,7 @@ function OutWork() {
     const requestOutWork = async () => {
         try {
             if (!confirm('외근을 신청 하시겠습니까?')) return false;
-            const response = await axios.post('http://localhost:3000/outwork/request', formData);
+            const response = await api.post('/outwork/request', formData);
             if (response.data.code !== 200) {
                 alert(response.data.message);
                 return false;
@@ -75,7 +76,7 @@ function OutWork() {
     //승인 목록 리프레시
     const refreshList = async (data) => {
         try {
-            const requestListReload = await axios.post('http://localhost:3000/outwork/list/requestList',data);
+            const requestListReload = await api.post('/outwork/list/requestList',data);
             setRequestList(requestListReload.data);
         } catch (error) {
             console.log("승인요청 목록을 불러오는중 에러 발생!: ", error)

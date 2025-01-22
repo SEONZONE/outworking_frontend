@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from "axios";
+import api from "./api/axios.js";
 
 
 const UpdateStatus = ({users, refreshList}) => {
@@ -8,7 +8,7 @@ const UpdateStatus = ({users, refreshList}) => {
             data.flag = flag;
             console.log(JSON.stringify(data));
             if (!confirm(`[${flag === 'C' ? '승인' : '반려'}]  ${data.요청자이름}님의 요청을 처리 하시겠습니까?`)) return false;
-            const response = await axios.post('http://localhost:3000/outwork/status/update', data);
+            const response = await api.post('/outwork/status/update', data);
             alert(response.data.message);
             await refreshList();
         } catch (error) {
