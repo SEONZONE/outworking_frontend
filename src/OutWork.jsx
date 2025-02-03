@@ -4,6 +4,7 @@ import UpdateStatus from "./UpdateStatus.jsx";
 import UserSelectCondition from "./UserSelectCondition.jsx";
 import api from "./api/axios.js";
 import LocationSelect from "./LocationSelect.jsx";
+import moment from "moment";
 
 
 function OutWork() {
@@ -11,6 +12,7 @@ function OutWork() {
     const [approverUser, setApproverUser] = useState([]);
     const [requestList, setRequestList] = useState([]);
     const [statusList, setStatusList] = useState([]);
+    const [initialDate, setInitialDate] = useState(new Date());
     const [formData, setFormData] = useState({
         requestUserId: '',
         approverUserId: '',
@@ -18,12 +20,15 @@ function OutWork() {
     });
 
     useEffect(() => {
+        const initialData = {
+            '요청월' : moment(initialDate).format('YYYYMM'),
+        }
         const fetchUsers = async () => {
             try {
                 const [reqUserResponse, approverUserRequest, requestUserList, statusList] = await Promise.all([
                     api.post('/outwork/list/reqUser'),
                     api.post('/outwork/list/approverUser'),
-                    api.post('/outwork/list/requestList'),
+                    api.post('/outwork/list/requestList',initialData),
                     api.post('/outwork/list/statusList'),
                 ]);
                 setRequestUser(reqUserResponse.data);
@@ -35,7 +40,7 @@ function OutWork() {
             }
         };
         fetchUsers();
-    }, []);
+    }, [initialDate]);
 
     //직원 선택 핸들러
     const userSelectHandler = (target) => (e) => {
@@ -122,6 +127,7 @@ function OutWork() {
                         approverUsers={approverUser}
                         statusList={statusList}
                         onSearchConditionChange={refreshList}
+                        initialDate={initialDate}
                     />
                 </div>
                 <div className="table-container">

@@ -3,8 +3,8 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
 import {ko} from 'date-fns/locale';
-const UserSelectCondition = ({requestUsers, approverUsers, statusList,onSearchConditionChange}) => {
-    const [selectedDate, setSelectedDate] = useState(null);
+const UserSelectCondition = ({requestUsers, approverUsers, statusList,onSearchConditionChange,initialDate}) => {
+    const [selectedDate, setSelectedDate] = useState(initialDate);
     const [selectedStatus, setSelectedStatus] = useState('');
     const [selectedApprover, setSelectedApprover] = useState('');
     const [selectedRequester, setSelectedRequester] = useState('');
@@ -12,7 +12,7 @@ const UserSelectCondition = ({requestUsers, approverUsers, statusList,onSearchCo
 
     const handleSearch = () =>{
         const conditions = {
-            요청시간: selectedDate ? moment(selectedDate).format('YYYYMM') : null,
+            요청월: selectedDate ? moment(selectedDate).format('YYYYMM') : null,
             요청상태: selectedStatus,
             승인아이디: selectedApprover,
             요청아이디: selectedRequester
@@ -39,6 +39,7 @@ const UserSelectCondition = ({requestUsers, approverUsers, statusList,onSearchCo
                     showMonthYearPicker
                     placeholderText="월을 선택하세요"
                     className="form-select select-condition-item"
+                    defaultValue={selectedDate}
                 />
                 <select
                     className="form-select select-condition-half"
