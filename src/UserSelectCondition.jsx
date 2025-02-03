@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
-
+import {ko} from 'date-fns/locale';
 const UserSelectCondition = ({requestUsers, approverUsers, statusList,onSearchConditionChange}) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedStatus, setSelectedStatus] = useState('');
@@ -32,6 +32,7 @@ const UserSelectCondition = ({requestUsers, approverUsers, statusList,onSearchCo
             <legend className="search-condition-legend">목록조건</legend>
             <div className="select-condition-container">
                 <DatePicker
+                    locale={ko}
                     selected={selectedDate}
                     onChange={(date) => setSelectedDate(date)}
                     dateFormat="yyyy년 MM월"
