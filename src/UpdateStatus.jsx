@@ -25,7 +25,7 @@ const UpdateStatus = ({users, refreshList}) => {
                     <th>승인자</th>
                     <th>요청상태</th>
                     <th>외근장소</th>
-                    <th>요청날짜</th>
+                    <th>처리일시</th>
                     <th>승인처리</th>
                 </tr>
                 </thead>
@@ -36,7 +36,7 @@ const UpdateStatus = ({users, refreshList}) => {
                         <td>{user.승인자이름}</td>
                         <td>{user.요청상태화면명}</td>
                         <td>{user.외근장소}</td>
-                        <td>{user.요청날짜}</td>
+                        <td>{user.처리일시}</td>
                         <td>
                             {user.요청상태 == 'I' ? (
                                 <div className="btn-group" role="group">

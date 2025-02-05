@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react';
 import UserSelect from "./UserSelect";
 import UpdateStatus from "./UpdateStatus.jsx";
 import UserSelectCondition from "./UserSelectCondition.jsx";
+import ExcelComponent from "./ExcelComponent.jsx";
 import api from "./api/axios.js";
 import LocationSelect from "./LocationSelect.jsx";
 import moment from "moment";
@@ -21,14 +22,14 @@ function OutWork() {
 
     useEffect(() => {
         const initialData = {
-            '요청월' : moment(initialDate).format('YYYYMM'),
+            '요청월': moment(initialDate).format('YYYYMM'),
         }
         const fetchUsers = async () => {
             try {
                 const [reqUserResponse, approverUserRequest, requestUserList, statusList] = await Promise.all([
                     api.post('/outwork/list/reqUser'),
                     api.post('/outwork/list/approverUser'),
-                    api.post('/outwork/list/requestList',initialData),
+                    api.post('/outwork/list/requestList', initialData),
                     api.post('/outwork/list/statusList'),
                 ]);
                 setRequestUser(reqUserResponse.data);
@@ -136,6 +137,9 @@ function OutWork() {
                         refreshList={refreshList}
                     />
                 </div>
+                {/*<div>*/}
+                {/*    <ExcelComponent data={requestList}/>*/}
+                {/*</div>*/}
             </div>
         </div>
     )
