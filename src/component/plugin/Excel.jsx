@@ -1,8 +1,7 @@
 import React from "react";
-import {Button} from 'react-bootstrap';
 import XLSX from 'xlsx-js-style';
 
-const ExcelComponent = ({data}) => {
+const Excel = ({data}) => {
     const excelDownLoad = async () => {
         if (!data || data.length === 0) {
             alert('다운로드할 데이터가 없습니다.');
@@ -83,4 +82,4 @@ const ExcelComponent = ({data}) => {
         </button>
     )
 }
-export default ExcelComponent;
+export default Excel;

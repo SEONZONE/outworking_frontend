@@ -29,14 +29,11 @@ const UserSelectCondition = ({
     }
 
     const handleReset = () => {
-        setSelectedDate(new Date());
+        setSelectedDate('');
         setSelectedStatus('');
         setSelectedApprover('');
         setSelectedRequester('');
-        const conditions ={
-            '요청월' : moment(new Date()).format('YYYYMM'),
-        };
-        onSearchConditionChange(conditions);
+        onSearchConditionChange();
     }
     return (
         <fieldset className="search-condition-fieldset">

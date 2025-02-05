@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import UserSelect from "./UserSelect";
+import UserSelect from "./UserSelect.jsx";
 import UpdateStatus from "./UpdateStatus.jsx";
 import UserSelectCondition from "./UserSelectCondition.jsx";
-import ExcelComponent from "./ExcelComponent.jsx";
-import api from "./api/axios.js";
+import Excel from "./plugin/Excel.jsx";
+import api from "../api/axios.js";
 import LocationSelect from "./LocationSelect.jsx";
 import moment from "moment";
 
@@ -132,7 +132,7 @@ function OutWork() {
                         statusList={statusList}
                         onSearchConditionChange={refreshList}
                         initialDate={initialDate}
-                        ExcelComponent={<ExcelComponent data={requestList}/>}
+                        ExcelComponent={<Excel data={requestList}/>}
                     />
                 </div>
                 <div className="table-container">

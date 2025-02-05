@@ -17,6 +17,7 @@
     "react-bootstrap": "^2.10.9",
     "react-datepicker": "^7.6.0",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^7.1.5",
     "react-select": "^5.9.0",
     "xlsx-js-style": "^1.2.0"
   },
