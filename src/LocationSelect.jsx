@@ -3,6 +3,7 @@ import React from 'react';
 const LocationSelect = ({onChange}) => {
     return (
         <div className="select-container">
+            <label className="form-label">장소: </label>
             <select
                 className="form-select"
                 onChange={onChange}

@@ -4,6 +4,10 @@ import XLSX from 'xlsx-js-style';
 
 const ExcelComponent = ({data}) => {
     const excelDownLoad = async () => {
+        if (!data || data.length === 0) {
+            alert('다운로드할 데이터가 없습니다.');
+            return;
+        }
         try {
             const wb = XLSX.utils.book_new()
             const headerStyle = {
@@ -47,7 +51,7 @@ const ExcelComponent = ({data}) => {
             const excelData = data.map(item => ([
                 {v: item.요청자이름, t: "s", s: dataStyle},
                 {v: item.승인자이름, t: "s", s: dataStyle},
-                {v: item.요청상태화면명, t: "s", s: dataStyle},
+                {v: item.처리상태화면명, t: "s", s: dataStyle},
                 {v: item.처리일시, t: "s", s: dataStyle}
             ]));
 

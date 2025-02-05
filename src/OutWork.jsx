@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import UserSelect from "./UserSelect";
 import UpdateStatus from "./UpdateStatus.jsx";
 import UserSelectCondition from "./UserSelectCondition.jsx";
@@ -96,32 +96,35 @@ function OutWork() {
         <div className="outwork-container">
             <div className="outwork-card">
                 <h3 className="outwork-title">어다인 외근 신청</h3>
-                <div className="form-row">
-                    <UserSelect
-                        label="요청자"
-                        users={requestUser}
-                        onChange={userSelectHandler('requestUserId')}
-                        value={formData.requestUserId}
-                    />
-                </div>
-                <div className="form-row">
-                    <UserSelect
-                        label="승인자"
-                        users={approverUser}
-                        onChange={userSelectHandler('approverUserId')}
-                        value={formData.approverUserId}
-                    />
-                </div>
-                <div className="form-row">
-                    <LocationSelect
-                        onChange={locationSelectHandler('location')}
-                    />
-                </div>
-                <div className="location-input-group">
-                    <button className="btn btn-primary" style={{width: '100%'}} onClick={requestOutWork}>
-                        신청
-                    </button>
-                </div>
+                <fieldset className='reuquest-outwork-fieldset'>
+                    <legend className="reuquest-outwork-legend">외근 신청</legend>
+                    <div className="form-row">
+                        <UserSelect
+                            label="요청자"
+                            users={requestUser}
+                            onChange={userSelectHandler('requestUserId')}
+                            value={formData.requestUserId}
+                        />
+                    </div>
+                    <div className="form-row">
+                        <UserSelect
+                            label="승인자"
+                            users={approverUser}
+                            onChange={userSelectHandler('approverUserId')}
+                            value={formData.approverUserId}
+                        />
+                    </div>
+                    <div className="form-row">
+                        <LocationSelect
+                            onChange={locationSelectHandler('location')}
+                        />
+                    </div>
+                    <div className="location-input-group">
+                        <button className="btn btn-primary" style={{width: '100%'}} onClick={requestOutWork}>
+                            신청
+                        </button>
+                    </div>
+                </fieldset>
                 <div className="location-input-group">
                     <UserSelectCondition
                         requestUsers={requestUser}
@@ -129,6 +132,7 @@ function OutWork() {
                         statusList={statusList}
                         onSearchConditionChange={refreshList}
                         initialDate={initialDate}
+                        ExcelComponent={<ExcelComponent data={requestList}/>}
                     />
                 </div>
                 <div className="table-container">
@@ -137,9 +141,6 @@ function OutWork() {
                         refreshList={refreshList}
                     />
                 </div>
-                {/*<div>*/}
-                {/*    <ExcelComponent data={requestList}/>*/}
-                {/*</div>*/}
             </div>
         </div>
     )

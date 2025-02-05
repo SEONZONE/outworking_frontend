@@ -23,7 +23,7 @@ const UpdateStatus = ({users, refreshList}) => {
                 <tr>
                     <th>요청자</th>
                     <th>승인자</th>
-                    <th>요청상태</th>
+                    <th>처리상태</th>
                     <th>외근장소</th>
                     <th>처리일시</th>
                     <th>승인처리</th>
@@ -34,11 +34,11 @@ const UpdateStatus = ({users, refreshList}) => {
                     <tr key={user.IDX}>
                         <td>{user.요청자이름}</td>
                         <td>{user.승인자이름}</td>
-                        <td>{user.요청상태화면명}</td>
+                        <td>{user.처리상태화면명}</td>
                         <td>{user.외근장소}</td>
                         <td>{user.처리일시}</td>
                         <td>
-                            {user.요청상태 == 'I' ? (
+                            {user.처리상태 == 'I' ? (
                                 <div className="btn-group" role="group">
                                     <button type="button" onClick={() => {
                                         updateStatusRouter({data: user, flag: 'C'})
