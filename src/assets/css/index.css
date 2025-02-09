@@ -43,6 +43,12 @@
     min-width: 120px; /* 최소 너비 설정 */
     white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
+.form-text {
+    flex: 1;
+    min-width: 120px; /* 최소 너비 설정 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    display: inline-block;
+}
 
 .search-condition-fieldset {
     border: 1px solid #dee2e6;

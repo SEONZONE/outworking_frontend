@@ -5,6 +5,7 @@ import moment from 'moment';
 import {ko} from 'date-fns/locale';
 
 const UserSelectCondition = ({
+                                 requestUserId,
                                  requestUsers,
                                  approverUsers,
                                  statusList,
@@ -23,7 +24,7 @@ const UserSelectCondition = ({
             요청월: selectedDate ? moment(selectedDate).format('YYYYMM') : null,
             처리상태: selectedStatus,
             승인아이디: selectedApprover,
-            요청아이디: selectedRequester
+            요청아이디: requestUsers
         }
         onSearchConditionChange(conditions);
     }

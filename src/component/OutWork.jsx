@@ -16,6 +16,7 @@ function OutWork() {
     const [initialDate, setInitialDate] = useState(new Date());
     const [formData, setFormData] = useState({
         requestUserId: '',
+        requestUserName: '',
         approverUserId: '',
         location: '',
     });
@@ -26,18 +27,32 @@ function OutWork() {
         }
         const fetchUsers = async () => {
             try {
+                const userSession = await api.get('/outwork/auth/session');
+                if(!userSession.data || !userSession.data.data) {
+                    window.location.href ='/';
+                    return;
+                }
+
                 const [reqUserResponse, approverUserRequest, requestUserList, statusList] = await Promise.all([
                     api.post('/outwork/list/reqUser'),
                     api.post('/outwork/list/approverUser'),
                     api.post('/outwork/list/requestList', initialData),
                     api.post('/outwork/list/statusList'),
                 ]);
+                const userData = userSession.data.data;
+                setFormData(prev => ({
+                    ...prev,
+                    requestUserId: userData.userId,
+                    requestUserName: userData.userName,
+
+                }));
                 setRequestUser(reqUserResponse.data);
                 setApproverUser(approverUserRequest.data);
                 setRequestList(requestUserList.data);
                 setStatusList(statusList.data);
             } catch (error) {
                 console.log("직원 목록을 불러오는중 에러 발생!: ", error)
+                window.location.href = '/'
             }
         };
         fetchUsers();
@@ -45,20 +60,21 @@ function OutWork() {
 
     //직원 선택 핸들러
     const userSelectHandler = (target) => (e) => {
-        setFormData({
-            ...formData,
+        setFormData(prev => ({
+            ...prev,
             [target]: e.target.value
-        });
+        }));
     }
 
     // 장소 선택 핸들러
     const locationSelectHandler = (target) => (e) => {
-        setFormData({
-            ...formData,
+        setFormData(prev => ({
+            ...prev,
             [target]: e.target.value
-        })
+        }))
     }
 
+    //외근 신청
     const requestOutWork = async () => {
         try {
             if (!confirm('외근을 신청 하시겠습니까?')) return false;
@@ -70,11 +86,11 @@ function OutWork() {
             console.log('외근 신청 성공', response);
             alert('외근이 신청되었습니다.');
             refreshList();
-            setFormData({
-                requestUserId: '',
+            setFormData( prev => ({
+                ...prev,
                 approverUserId: '',
                 location: ''
-            });
+            }));
         } catch (error) {
             alert('외근 신청이 실패 하였습니다 ', error);
             console.log('외근 신청 실패', error);
@@ -99,12 +115,12 @@ function OutWork() {
                 <fieldset className='reuquest-outwork-fieldset'>
                     <legend className="reuquest-outwork-legend">외근 신청</legend>
                     <div className="form-row">
-                        <UserSelect
-                            label="요청자"
-                            users={requestUser}
-                            onChange={userSelectHandler('requestUserId')}
-                            value={formData.requestUserId}
-                        />
+                        <div className="form-group">
+                            <label className="form-label">요청자: </label>
+                            <div className="form-text">
+                                {formData.requestUserName || ''}
+                            </div>
+                        </div>
                     </div>
                     <div className="form-row">
                         <UserSelect
@@ -117,6 +133,7 @@ function OutWork() {
                     <div className="form-row">
                         <LocationSelect
                             onChange={locationSelectHandler('location')}
+                            value={formData.location}
                         />
                     </div>
                     <div className="location-input-group">
@@ -127,6 +144,7 @@ function OutWork() {
                 </fieldset>
                 <div className="location-input-group">
                     <UserSelectCondition
+                        requestUserId={formData.requestUserId}
                         requestUsers={requestUser}
                         approverUsers={approverUser}
                         statusList={statusList}

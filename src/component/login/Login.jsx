@@ -19,7 +19,7 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await api.post("/outwork/login", {formData})
+            const response = await api.post("/outwork/auth/login", {formData})
             if (response.data.success) {
                 navigate("/outwork");
             }

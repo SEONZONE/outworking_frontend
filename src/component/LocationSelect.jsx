@@ -1,12 +1,13 @@
 import React from 'react';
 
-const LocationSelect = ({onChange}) => {
+const LocationSelect = ({onChange,value}) => {
     return (
         <div className="select-container">
             <label className="form-label">장소: </label>
             <select
                 className="form-select"
                 onChange={onChange}
+                value={value}
             >
                 <option value="">장소를 선택하세요</option>
                 <option value="신한은행">신한은행</option>
